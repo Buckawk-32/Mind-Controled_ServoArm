@@ -111,7 +111,7 @@ class NeruoskyParser(object):
         
         if self.telnet == None:
             print("Building Telnet Connection to ThinkGear Connector...")
-            self.telnet = Telnet("localhost", 13854)
+            self.telnet = TelnetClient("localhost", 13854)
         else:
             self.telnet.open("localhost", 13854)
 
@@ -309,3 +309,12 @@ class NeruoskyParser(object):
                         i = i + 1
                 else:
                     print('wrong checksum!!!')
+
+class OculusParser:
+
+    def __init__(self):
+        pass
+
+    def __del__(self):
+        pass
+    

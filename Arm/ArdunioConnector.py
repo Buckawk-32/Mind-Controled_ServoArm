@@ -1,6 +1,6 @@
-from ArmManager import DataManager
+from Arm.ArmController import dataManager
 
-data = DataManager(115200, 'COM4')
+data = dataManager(115200, 'COM4')
 
 data.startConnection()
 
