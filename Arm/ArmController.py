@@ -14,10 +14,10 @@ import serial.tools.list_ports
 
 class DataManager(object):
 
-    def __init__(self, baudrate):
+    def __init__(self, com, baudrate=int):
         self.baudrate = baudrate
 
-        self.COM = None
+        self.COM = com
         self.devID = None
 
         self.isS_ThreadRunning = False
@@ -32,9 +32,9 @@ class DataManager(object):
         # self.ArdunioInputTerm = manyterm.Terminal("Ardunio Input (After Lerp)")
         # self.ArdunioOutputTerm = manyterm.Terminal("Ardunio Output")
 
-        self.findDevice()
+        if com == None:
+            self.findDevice()
 
-    
     def __del__(self):
         if self.isS_ThreadRunning == True or self.isL_ThreadRunning == True:
             self.stop()
@@ -81,11 +81,15 @@ class DataManager(object):
         self.COM = ports[choice].device
         self.devID = ports[choice].hwid
 
+    def forcePort(self, com):
+        self.COM = com
+
 
     def start(self, senderFunc, listenerFunc):
         if self.srl == None:
             print("Intizalizing Arudnio Serial Port...")
             self.srl = serial.Serial(port=self.COM, baudrate=self.baudrate, timeout=0.1)
+            print("done")
         else:
             print("Opening Arudnio Serial port...")
             self.srl.open()
@@ -109,33 +113,32 @@ class DataManager(object):
 
 
 class ManualControl:
+
     def __init__(self, baudrate):
-        self.label = None
         self.baudrate = baudrate
 
-        self.dataManager = DataManager(baudrate)
-        self.srl = self.dataManager.srl
+        self.dataManager = DataManager(None, baudrate)
+        self.dataManager.start(senderFunc=self.sendLabels, listenerFunc=None)
 
-        self.dataManager.start(senderFunc=self.sendLabels(), listenerFunc=None)
-
-    # def __del__(self):
-    #     self.dataManager.__del__()
+    def __del__(self):
+        self.dataManager.__del__()
 
     
     def sendLabels(self):
-        print("""Use the arrow keys to control the Prosthetic
+        print("""
+Use the arrow keys to control the Prosthetic
               
-              Right -> Move to Finger, Pinky to Thumb
-              Left -> Move to Finger, Thumb to Pinky
-              Up -> Move Finger up (0 degrees)
-              Down -> Move Finger down (180 degrees)""")
+Right -> Move to Finger, Pinky to Thumb
+Left -> Move to Finger, Thumb to Pinky
+Up -> Move Finger up (0 degrees)
+Down -> Move Finger down (180 degrees)""")
         
         while True:
             keyEvent = keyboard.read_event()
             if keyEvent.event_type == "down":
-                self.srl.write(bytes(f"{self.label}", "utf-8"))
-            time.sleep(1)
-
+                self.dataManager.srl.write(bytes(f"{keyEvent.name}", "utf-8"))
+            if keyEvent.name == "q":
+                exit(1)
 
     def receiveFeedback(self):
         pass
@@ -146,7 +149,7 @@ class EEGControl_Mapped:
     def __init__(self, eegData, baudrate):
         self.eegData = eegData
         self.baudrate = baudrate
-        self.dataManager = DataManager(baudrate)
+        self.dataManager = DataManager(None, baudrate)
 
         self.srl = self.dataManager.srl
         
@@ -215,12 +218,21 @@ class TwinControl:
         self.positionalData = data
         self.baudrate = baudrate
         
-        self.dataManager = DataManager(baudrate)
+        self.dataManager = DataManager("COM3", 115200)
 
         self.srl = self.dataManager.srl
-        
-        self.dataManager.start(senderFunc=None, listenerFunc=None)
 
-    
+        self.dataManager.start(senderFunc=self.grabPositions, listenerFunc=None)
+
     def __del__(self):
         self.dataManager.__del__()
+
+    
+    def grabPositions(self):
+        self.sendConnectionID
+
+
+    #! Testing only
+    def sendConnectionID(self):
+        self.srl.write(bytes(f"Con: {self.dataManager.devID}", "utf-8"))
+        print("Sent Connection Identifier")
