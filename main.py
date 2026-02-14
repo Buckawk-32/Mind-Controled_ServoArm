@@ -1,9 +1,10 @@
-from Headset import Parser
-from Arm import ArmController
-from Unity.UnityClient import UnityClient
-from collections import deque
+#from Headset import Parser
+#from Arm import ArmController
+#from Unity.UnityClient import UnityClient
+from Godot.GodotClient import GodotClient
+#from collections import deque
 
-import time
+#import time
 
 # headset = Parser.NeruoskyParser("COM6", 115200)
 
@@ -25,4 +26,5 @@ import time
 #     twinControl.grabPositions()
 #     time.sleep(0.2)
 
-unityClient = UnityClient(1)
+
+godotClient = GodotClient(1)

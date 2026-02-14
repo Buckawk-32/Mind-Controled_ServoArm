@@ -1,12 +1,10 @@
-import socket
-import threading
-import time
 import asyncio
+
 
 class UnityClient:
 
-    HOST, PORT = "10.79.40.170", 25001
-    # HOST, PORT = "localhost", 25001
+    # HOST, PORT = "10.79.40.170", 25001
+    HOST, PORT = "localhost", 25001
     # HOST, PORT = "192.168.2.149", 25001
 
     def __init__(self, ID=int):
@@ -23,22 +21,6 @@ class UnityClient:
     def __del__(self):
         self.stop()
 
-    async def stop(self):
-        await self._lock.acquire()
-        try:
-            self.data = None
-            print("Cleared Data...\n")
-
-            self.streamWriter.close()
-            await self.streamWriter.wait_closed()
-            print("StreamWriter -- Connection Closed")
-            print("StreadReader -- Connection Closed")
-
-            print("UnityClient -- Conneciton Closed")
-        except Exception as e:
-            print(e)
-        finally:
-            self._lock.release()
 
 
     async def start(self):
@@ -96,9 +78,11 @@ class UnityClient:
                 except Exception as e:
                     print(e)
                 finally:
-                    break
+                    print("Closing Connetion...")
+                    
+                return
 
-        print("Closing Connetion...")
+
 
     # async def confirmConnection(self):
     #     self.streamWriter.write(f"CON: {self.devID}".encode())
@@ -106,3 +90,21 @@ class UnityClient:
     #     connectionConfirm = await self.streamReader.readline()
     #     print("check connectionConfirm")
     #     return connectionConfirm.decode()
+
+    async def stop(self):
+        await self._lock.acquire()
+        try:
+            self.data = None
+            print("Cleared Data...\n")
+
+            self.streamWriter.close()
+            await self.streamWriter.wait_closed()
+            print("StreamWriter -- Connection Closed")
+            print("StreadReader -- Connection Closed")
+
+            print("UnityClient -- Conneciton Closed")
+        except Exception as e:
+            print(e)
+        finally:
+            self._lock.release()
+

@@ -4,7 +4,6 @@ import time
 import json
 
 import serial
-from Redo import HeadsetConnector
 
 CONNECT = '\xc0'
 DISCONNECT = '\xc1'
@@ -105,11 +104,11 @@ class NeruoskyParser(object):
 
 # TODO: Rewrite the Telnet Parser
     def start_telnet(self):
-        if self.threadIsRunning == True:
+        if self.threadIsRunning:
             print("Mindwave is already Running...")
             return
         
-        if self.telnet == None:
+        if self.telnet is None:
             print("Building Telnet Connection to ThinkGear Connector...")
             self.telnet = TelnetClient("localhost", 13854)
         else:
