@@ -28,10 +28,11 @@ class GodotClient:
         print("Connected to Godot Server!")
 
         try:
-            self.streamWriter.write(f"Hello from: {self.clientID}")
+            self.streamWriter.write(f"Confirmation : {self.clientID}".encode("utf-8"))
             await self.streamWriter.drain()
-            connectionConfirm = await self.streamReader.readline()
-            print(f"Server: {connectionConfirm}")
+            print("Printed Dev ID!")
+            #connectionConfirm = await self.streamReader.readline()
+            #print(f"Server: {connectionConfirm}")
         except Exception() as e:
             print(e)
         finally:
