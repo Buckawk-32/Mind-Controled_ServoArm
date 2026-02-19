@@ -49,7 +49,8 @@ class GodotClient:
         await self._lock.acquire()
         try: 
             self.isClientConnected = True
-            await self.testCommunication()
+            # await self.testEchoCommunication()
+            await self.testCrossCommunication()
         except Exception as e:
             print(e)    
         finally:
@@ -59,7 +60,7 @@ class GodotClient:
 
 
 # Functions that can be used for the main Communication Loop
-    async def testCommunication(self):
+    async def testEchoCommunication(self):
         while True:
             usrInput = input("> ")
             if usrInput is not None:
@@ -74,6 +75,26 @@ class GodotClient:
                     self.streamWriter.write(f"MSG: {usrInput}\r\n".encode("utf-8"))
                     await self.streamWriter.drain()
 
+    
+    async def testCrossCommunication(self):
+        while True:
+            usrInput = input("> ")
+            if usrInput is not None:
+                if usrInput == "q":
+                    self.streamWriter.write(f"QUIT: {self.clientID}\r\n".encode("utf-8"))
+                    await self.streamWriter.drain()
+                    print("-- Printed Quit Statement!")
+                    quitConfirm = await self.streamReader.readline()
+                    print(f"{quitConfirm.decode("utf-8")}")
+                    break
+                else:
+                    self.streamWriter.write(f"MSG: {usrInput}\r\n".encode("utf-8"))
+                    await self.streamWriter.drain()
+                    incomingMsg = await self.streamReader.readline()
+                    if incomingMsg.decode("utf-8").startswith("1"):
+                        continue
+                    else:
+                        print(f"{incomingMsg.decode("utf-8")}")
 
 # Handling Stopping Connections and Cleaning
     async def stop(self):
