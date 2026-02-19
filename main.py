@@ -27,4 +27,4 @@ from Godot.GodotClient import GodotClient
 #     time.sleep(0.2)
 
 
-godotClient = GodotClient(1)
+godotClient = GodotClient()

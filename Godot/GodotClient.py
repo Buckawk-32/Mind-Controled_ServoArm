@@ -4,17 +4,22 @@ class GodotClient:
 
     HOST, PORT = "127.0.0.1", 4001
 
-    def __init__(self, ID=int):
+    def __init__(self):
         self.data = None
         self.streamWriter = None
         self.streamReader = None 
 
-        self.clientID = f"PYTHON-GodotClient({ID})"
+        self.clientID = f"PYTHON-GodotClient({self.saveID()})"
         self.isClientConnected = False
 
         self._lock = asyncio.Lock()
 
         asyncio.run(self.start())
+
+    
+    def saveID(self):
+        usrID = input("What is your ID: ")
+        return usrID
 
 # Starting Connection Loop and Connection Confirmation
     async def start(self):
@@ -66,7 +71,7 @@ class GodotClient:
                     print(f"{quitConfirm.decode("utf-8")}")
                     break
                 else:
-                    self.streamWriter.write(f"MSG: {usrInput}".encode("utf-8"))
+                    self.streamWriter.write(f"MSG: {usrInput}\r\n".encode("utf-8"))
                     await self.streamWriter.drain()
 
 
