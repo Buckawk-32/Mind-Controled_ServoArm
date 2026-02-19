@@ -73,7 +73,7 @@ public class UnityServer : MonoBehaviour
     private static int portNumber = 25001;
     private static IPAddress addr = IPAddress.Parse("10.79.40.170");
     private static List<ClientData> clientList = new List<ClientData>();
-    // ------------------------------------------------------------------------
+// ------------------------------------------------------------------------
     private static readonly object _lock = new object();
 // ------------------------------------------------------------------------
     public static OVRHand hand;
