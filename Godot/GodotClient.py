@@ -74,7 +74,6 @@ class GodotClient:
                 else:
                     self.streamWriter.write(f"MSG: {usrInput}\r\n".encode("utf-8"))
                     await self.streamWriter.drain()
-
     
     async def testCrossCommunication(self):
         while True:
@@ -95,6 +94,7 @@ class GodotClient:
                         continue
                     else:
                         print(f"{incomingMsg.decode("utf-8")}")
+
 
 # Handling Stopping Connections and Cleaning
     async def stop(self):
