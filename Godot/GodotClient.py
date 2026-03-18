@@ -7,13 +7,13 @@ class GodotClient:
 
     def __init__(self):
         self.data = None
-        self.streamWriter = None
-        self.streamReader = None 
+        self.streamWriter : asyncio.StreamReader
+        self.streamReader : asyncio.StreamReader
 
         self.clientID = f"PYTHON-GodotClient({self.saveID()})"
         self.isClientConnected = False
 
-        self.handleMsgThread = None
+        self.handleMsgThread : threading.Thread
 
         self._lock = asyncio.Lock()
 
@@ -29,20 +29,20 @@ class GodotClient:
         await self._lock.acquire()
         try:
             self.streamReader, self.streamWriter = await asyncio.open_connection(self.HOST, self.PORT)
-        except Exception() as e:
+        except Exception as e:
             print(e)
         finally:
             self._lock.release()
 
         print("-- Connected to Godot Server!")
 
-        try:
-            self.streamWriter.write(f"CON: {self.clientID}\r\n".encode("utf-8"))
-            await self.streamWriter.drain()
+        try: 
+            self.streamWriter.write(f"CON: {self.clientID}\r\n".encode("utf-8"))  
+            await self.streamWriter.drain() 
             print("-- Printed Dev ID!")
-            connectionConfirm = await self.streamReader.readline()
+            connectionConfirm = await self.streamReader.readline() 
             print(f"{connectionConfirm.decode("utf-8")}")
-        except Exception() as e:
+        except Exception as e:
             print(e)
         finally:
             await self.handleConnection()
@@ -52,9 +52,9 @@ class GodotClient:
         await self._lock.acquire()
         try: 
             self.isClientConnected = True
-            # await self.testEchoCommunication()
+            await self.testEchoCommunication()
             # await self.testCrossCommunication()
-            await self.testListentoServer()
+            # await self.testListentoServer()
         except Exception as e:
             print(e)    
         finally:
@@ -152,7 +152,7 @@ class GodotClient:
             print(e)
         finally:
             self._lock.release()
-            # exit(1)
+            exit(1)
 
     def __del__(self):
         asyncio.run(self.stop())
