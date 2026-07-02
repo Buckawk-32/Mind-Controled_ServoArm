@@ -7,7 +7,7 @@ class GodotClient:
 
     def __init__(self):
         self.data = None
-        self.streamWriter : asyncio.StreamReader
+        self.streamWriter : asyncio.StreamWriter
         self.streamReader : asyncio.StreamReader
 
         self.clientID = f"PYTHON-GodotClient({self.saveID()})"
