@@ -24,7 +24,7 @@ class GodotClient:
         usrID = input("What is your ID: ")
         return usrID
 
-# Starting Connection Loop and Connection Confirmation
+
     async def start(self):
         await self._lock.acquire()
         try:
@@ -47,7 +47,7 @@ class GodotClient:
         finally:
             await self.handleConnection()
 
-# Main communication Loop
+
     async def handleConnection(self):
         await self._lock.acquire()
         try: 
@@ -63,7 +63,6 @@ class GodotClient:
             await self.stop()
 
 
-# Functions that can be used for the main Communication Loop
     async def testEchoCommunication(self):
         while True:
             usrInput = input("> ")
@@ -129,7 +128,7 @@ class GodotClient:
         msgLoop.close()
 
 
-# Handling Stopping Connections and Cleaning
+
     async def stop(self):
         await self._lock.acquire()
         try:
