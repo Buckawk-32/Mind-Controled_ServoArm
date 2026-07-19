@@ -1,8 +1,8 @@
-import subprocess
-import socket
-import threading
 import os
+import socket
+import subprocess
 import sys
+
 
 class Terminal:
     
