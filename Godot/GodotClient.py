@@ -5,7 +5,7 @@ import asyncio
 import threading
 
 #  TODO: Use better naming convention to shorten this import line
-from gen.python.proto.self.client.v1.message_pb2 import *
+from gen.python.proto.self.client.v1.message_pb2 import *  # noqa: F403
 
 
 
@@ -36,15 +36,14 @@ class GodotClient:
 
 
 
-
          
 
 
 
     def getID(self):
-        usrID = input("What is your ID: ")
+        usrID = int(input("What is your ID: "))
         return usrID
 
     def getClientName(self):
-        name = input("What is your name: ")
+        name = str(input("What is your name: "))
         return name
