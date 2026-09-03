@@ -1,5 +1,5 @@
 import threading
-
+from gen.python.proto.self.client.v1.message_pb2 import *
 
 
 class DataManager:
@@ -12,7 +12,14 @@ class DataManager:
 
 
     def startThread(self):
+        self.dataThread = threading.Thread()        
 
 
-    def publishToUI(self):
-        
+    def addToIncomingQueue(self, packet: PacketEnvelope):
+        self.incomingPacketQueue[0].append(packet)  # ty: ignore[unresolved-attribute]
+        self.incomingPacketQueue[1] = True
+
+    def addToOutgoingQueue(self, packet: PacketEnvelope):
+        self.outgoingPacketQueue[0].append(packet)  # ty: ignore[unresolved-attribute]
+        self.outgoingPacketQueue[1] = True
+
