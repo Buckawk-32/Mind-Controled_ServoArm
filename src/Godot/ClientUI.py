@@ -44,7 +44,7 @@ class UI:
 
     def publishInputMessage(self, s: str):
         with self.term.location(self.OUTPUT_MESSAGE_LOCATION[0], self.OUTPUT_MESSAGE_LOCATION[1]):
-            self.echo(f"{self.CLIENT_NAME}: " + self.term.green(s))
+            self.echo(f"{self.term.bold_blue(self.CLIENT_NAME)}: " + self.term.green(s))
             
         self.OUTPUT_MESSAGE_LOCATION[1] += 1
 
