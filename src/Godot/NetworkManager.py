@@ -1,6 +1,6 @@
 import asyncio
-import socket
 import threading
+
 
 class TCPInterface:
 
@@ -18,8 +18,11 @@ class TCPInterface:
         self.isNetworkThreadRunning = False
 
 
-    def publishIncomingPacket(self):
-        pass
+    def startThread(self):
+        self.networkThread.start()
+        self.isNetworkThreadRunning = True
 
      
-         
+    def stop(self):
+        if self.isNetworkThreadRunning:
+            self.networkThread.join()

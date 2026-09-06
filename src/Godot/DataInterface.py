@@ -1,4 +1,5 @@
 import threading
+
 from gen.python.proto.self.client.v1.message_pb2 import *
 
 
@@ -10,16 +11,30 @@ class DataManager:
         self.dataThread : threading.Thread 
         self.isDataThreadRunning = False
 
-
     def startThread(self):
         self.dataThread = threading.Thread()        
 
 
-    def addToIncomingQueue(self, packet: PacketEnvelope):
+    def pushToIncomingQueue(self, packet: PacketEnvelope):
         self.incomingPacketQueue[0].append(packet)  # ty: ignore[unresolved-attribute]
         self.incomingPacketQueue[1] = True
 
-    def addToOutgoingQueue(self, packet: PacketEnvelope):
+    def pushToOutgoingQueue(self, packet: PacketEnvelope):
         self.outgoingPacketQueue[0].append(packet)  # ty: ignore[unresolved-attribute]
         self.outgoingPacketQueue[1] = True
 
+    def popFromOutgoingQueue(self):
+        self.outgoingPacketQueue[1] = True
+        return self.outgoingPacketQueue[0].pop(0)  # ty: ignore[unresolved-attribute]
+
+    def popFromIncomingQueue(self):
+        self.incomingPacketQueue[1] = True
+        return self.incomingPacketQueue[0].pop(0)  # ty: ignore[unresolved-attribute]
+
+
+
+    def stop(self):
+        if self.isDataThreadRunning:
+            self.dataThread.join()
+
+    

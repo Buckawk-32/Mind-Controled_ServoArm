@@ -3,6 +3,8 @@ import time
 
 import blessed
 
+from gen.python.proto.self.client.v1.message_pb2 import *
+
 
 class UI:
     def __init__(self, term: blessed.Terminal):
@@ -28,8 +30,6 @@ class UI:
         self.CLIENT_ID : int
 
 
-        self.startThread()
-        
     def __del__(self):
         if not self.isUIRunning:
             self.stop()
@@ -42,13 +42,26 @@ class UI:
         print(self.term.set_window_title("TCP Client UI")) 
 
 
+    def pushMessagePacket(self, msg: str):
+        packet = PacketEnvelope(
+            Tag.TAG_MESSAGE_UNSPECIFIED,
+            client_id=self.CLIENT_ID,
+            client_name=self.CLIENT_NAME,
+            timestamp=time.time_ns(),
+            message=Message(0, msg)
+        )
+
+        return packet
+
+
+
     def publishInputMessage(self, s: str):
         with self.term.location(self.OUTPUT_MESSAGE_LOCATION[0], self.OUTPUT_MESSAGE_LOCATION[1]):
             self.echo(f"{self.term.bold_blue(self.CLIENT_NAME)}: " + self.term.green(s))
             
         self.OUTPUT_MESSAGE_LOCATION[1] += 1
 
-    
+        self.pushMessagePacket(s) 
 
 
     def startThread(self):
@@ -97,6 +110,7 @@ class UI:
             self.echo("x")
 
         self.writeToDevConsole("Marked Text Locations...")
+
 
     def drawQuitScreen(self):
         print(self.term.home + self.term.clear)
