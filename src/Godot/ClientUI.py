@@ -2,8 +2,10 @@ import threading
 import time
 
 import blessed
+from google.protobuf import text_format
 
-from gen.python.proto.self.client.v1.message_pb2 import *
+# /home/buckawk32/Nethika/CODE/OfficalProjects/Mind-Controled_ServoArm/src/gen/python/self/client/v1/message_pb2.py
+from gen.python.self.client.v1.message_pb2 import Message, PacketEnvelope, Tag
 
 
 class UI:
@@ -29,6 +31,7 @@ class UI:
         self.CLIENT_NAME : str
         self.CLIENT_ID : int
 
+        self.curPacket = [PacketEnvelope(), False]
 
     def __del__(self):
         if not self.isUIRunning:
@@ -43,25 +46,23 @@ class UI:
 
 
     def pushMessagePacket(self, msg: str):
-        packet = PacketEnvelope(
-            Tag.TAG_MESSAGE_UNSPECIFIED,
-            client_id=self.CLIENT_ID,
-            client_name=self.CLIENT_NAME,
-            timestamp=time.time_ns(),
-            message=Message(0, msg)
-        )
+        self.curPacket[0].tag = Tag.TAG_MESSAGE_UNSPECIFIED  # ty: ignore[invalid-assignment]
+        self.curPacket[0].client_id = self.CLIENT_ID  # ty: ignore[invalid-assignment]
+        self.curPacket[0].client_name = self.CLIENT_NAME  # ty: ignore[invalid-assignment]
+        self.curPacket[0].timestamp = time.time_ns()  # ty: ignore[invalid-assignment]
 
-        return packet
-
-
-
+        self.curPacket[0].message.CopyFrom(Message(receiving_id=0, message=msg))  # ty: ignore[unresolved-attribute]
+         
     def publishInputMessage(self, s: str):
         with self.term.location(self.OUTPUT_MESSAGE_LOCATION[0], self.OUTPUT_MESSAGE_LOCATION[1]):
             self.echo(f"{self.term.bold_blue(self.CLIENT_NAME)}: " + self.term.green(s))
             
         self.OUTPUT_MESSAGE_LOCATION[1] += 1
+        self.pushMessagePacket(s)
 
-        self.pushMessagePacket(s) 
+        with open("testOutput/backupLog.txt", "a") as file:
+            file.write(text_format.MessageToString(self.curPacket[0]))
+
 
 
     def startThread(self):
@@ -238,3 +239,4 @@ class UI:
 if __name__ == "__main__":
     term = blessed.Terminal()
     ui = UI(term) 
+    ui.startThread()

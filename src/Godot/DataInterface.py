@@ -1,6 +1,6 @@
 import threading
 
-from gen.python.proto.self.client.v1.message_pb2 import *
+from gen.python.self.client.v1.message_pb2 import Message, PacketEnvelope, Tag
 
 
 class DataManager:
