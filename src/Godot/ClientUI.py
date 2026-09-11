@@ -31,7 +31,8 @@ class UI:
         self.CLIENT_NAME : str
         self.CLIENT_ID : int
 
-        self.curPacket = [PacketEnvelope(), False]
+        self.curPacket = PacketEnvelope()
+        self.iscurPacketChanged = False
 
     def __del__(self):
         if not self.isUIRunning:
@@ -46,12 +47,14 @@ class UI:
 
 
     def pushMessagePacket(self, msg: str):
-        self.curPacket[0].tag = Tag.TAG_MESSAGE_UNSPECIFIED  # ty: ignore[invalid-assignment]
-        self.curPacket[0].client_id = self.CLIENT_ID  # ty: ignore[invalid-assignment]
-        self.curPacket[0].client_name = self.CLIENT_NAME  # ty: ignore[invalid-assignment]
-        self.curPacket[0].timestamp = time.time_ns()  # ty: ignore[invalid-assignment]
+        self.curPacket.tag = Tag.TAG_MESSAGE_UNSPECIFIED
+        self.curPacket.client_id = self.CLIENT_ID
+        self.curPacket.client_name = self.CLIENT_NAME
+        self.curPacket.timestamp = time.time_ns()
 
-        self.curPacket[0].message.CopyFrom(Message(receiving_id=0, message=msg))  # ty: ignore[unresolved-attribute]
+        self.curPacket.message.CopyFrom(Message(receiving_id=0, message=msg))
+        
+        self.iscurPacketChanged = True
          
     def publishInputMessage(self, s: str):
         with self.term.location(self.OUTPUT_MESSAGE_LOCATION[0], self.OUTPUT_MESSAGE_LOCATION[1]):
@@ -60,9 +63,13 @@ class UI:
         self.OUTPUT_MESSAGE_LOCATION[1] += 1
         self.pushMessagePacket(s)
 
-        with open("testOutput/backupLog.txt", "a") as file:
-            file.write(text_format.MessageToString(self.curPacket[0]))
+        with open("logs/uiLogs/readablePackets.txt", "a") as file:
+            file.write(text_format.MessageToString(self.curPacket))
 
+        with open("logs/uiLogs/bytePacket.bin", "ab") as file:
+            file.write(self.curPacket.SerializeToString())
+
+        self.iscurPacketChanged = False
 
 
     def startThread(self):
@@ -72,7 +79,15 @@ class UI:
         self.UIThread.start()
         self.isUIRunning = True
 
+        print("UI Thread Started!")
+
+
     def updateLoop(self):
+        with open("logs/uiLogs/readablePackets.txt", "a") as file:
+            file.write(f"\n\nClientUI Started: {time.ctime()}\n\n") 
+        with open("logs/uiLogs/bytePacket.bin", "ab") as file:
+            file.write(f"\n\nClientUI Started: {time.ctime()}\n\n".encode()) 
+
         with self.term.fullscreen(), self.term.cbreak():
             self.writeToDevConsole("Starting Client TUI...")
             self.drawMargins()
@@ -180,16 +195,12 @@ class UI:
                 if keyInput.name == "KEY_ENTER":
                     break
                 elif keyInput.name == "KEY_ESCAPE":
-                    text = ""
+                    text = "quit"
                     break
                 elif keyInput.name == "KEY_BACKSPACE" or keyInput.name == "KEY_DELETE":  # noqa: SIM102
                     if len(text) > 0:
                         text = text[:-1]
                         self.echo("\b \b")
-
-            elif keyInput.lower() == "q":
-                return "quit"
-
             else:
                 text += keyInput
                 self.echo(keyInput)

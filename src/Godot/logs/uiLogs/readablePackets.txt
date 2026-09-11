@@ -1,0 +1,117 @@
+
+
+ClientUI Started: Fri Sep 11 11:27:46 2026
+
+client_name: "test"
+timestamp: 1789097279042347373
+message {
+  message: "Hello"
+}
+client_name: "test"
+timestamp: 1789097281825005915
+message {
+  message: "This is a test"
+}
+client_name: "test"
+timestamp: 1789097297144281892
+message {
+  message: "This should mean that everything is working on the client UI side of the application"
+}
+
+
+ClientUI Started: Fri Sep 11 11:31:57 2026
+
+client_id: 1
+client_name: "Nethika"
+timestamp: 1789097523452752972
+message {
+  message: "Hello"
+}
+client_id: 1
+client_name: "Nethika"
+timestamp: 1789097530635231421
+message {
+  message: "Ok so nothing is crashing"
+}
+client_id: 1
+client_name: "Nethika"
+timestamp: 1789097531922358069
+message {
+  message: "q"
+}
+
+
+ClientUI Started: Fri Sep 11 11:35:48 2026
+
+client_id: 2
+client_name: "Godot"
+timestamp: 1789097754752488053
+message {
+  message: "hello"
+}
+client_id: 2
+client_name: "Godot"
+timestamp: 1789097760083365049
+message {
+  message: "Is this writing to the data log??"
+}
+
+
+ClientUI Started: Fri Sep 11 11:38:06 2026
+
+client_id: 3
+client_name: "Human"
+timestamp: 1789097893273577750
+message {
+  message: "hello"
+}
+client_id: 3
+client_name: "Human"
+timestamp: 1789097897198979956
+message {
+  message: "Is this writing?"
+}
+
+
+ClientUI Started: Fri Sep 11 11:46:46 2026
+
+client_id: 2
+client_name: "Nethika"
+timestamp: 1789098410584675988
+message {
+  message: "Hello"
+}
+client_id: 2
+client_name: "Nethika"
+timestamp: 1789098411908517339
+message {
+  message: "Ok "
+}
+
+
+ClientUI Started: Fri Sep 11 11:48:14 2026
+
+client_id: 2
+client_name: "Boom"
+timestamp: 1789098501009804682
+message {
+  message: "Hello"
+}
+client_id: 2
+client_name: "Boom"
+timestamp: 1789098502262996440
+message {
+  message: "Ok "
+}
+client_id: 2
+client_name: "Boom"
+timestamp: 1789098504722298864
+message {
+  message: "Woah"
+}
+client_id: 2
+client_name: "Boom"
+timestamp: 1789098511787912528
+message {
+  message: "There should be 4 push messages then"
+}
