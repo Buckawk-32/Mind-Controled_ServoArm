@@ -115,3 +115,25 @@ timestamp: 1789098511787912528
 message {
   message: "There should be 4 push messages then"
 }
+
+
+ClientUI Started: Mon Sep 14 02:44:54 2026
+
+client_id: 2
+client_name: "Nethika"
+timestamp: 1789325098743757772
+message {
+  message: "Hello"
+}
+client_id: 2
+client_name: "Nethika"
+timestamp: 1789325099693628903
+message {
+  message: "Hi"
+}
+client_id: 2
+client_name: "Nethika"
+timestamp: 1789325103858719237
+message {
+  message: "Does this finally work?"
+}

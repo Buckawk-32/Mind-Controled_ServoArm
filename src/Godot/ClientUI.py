@@ -4,8 +4,8 @@ import time
 import blessed
 from google.protobuf import text_format
 
-# /home/buckawk32/Nethika/CODE/OfficalProjects/Mind-Controled_ServoArm/src/gen/python/self/client/v1/message_pb2.py
-from gen.python.self.client.v1.message_pb2 import Message, PacketEnvelope, Tag
+# /home/buckawk32/Nethika/CODE/OfficalProjects/Mind-Controled_ServoArm/src/gen/python/proto/self/client/v1/message_pb2.py
+from gen.python.proto.self.client.v1.message_pb2 import Message, PacketEnvelope, Tag
 
 
 class UI:
