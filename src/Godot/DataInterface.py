@@ -1,7 +1,8 @@
 import threading
 import time
 
-from gen.python.self.client.v1.message_pb2 import PacketEnvelope
+# /home/buckawk32/Nethika/CODE/OfficalProjects/Mind-Controled_ServoArm/src/gen/python/proto/self/client/v1/message_pb2.py
+from gen.python.proto.self.client.v1.message_pb2 import PacketEnvelope
 
 
 class DataManager:
@@ -13,6 +14,12 @@ class DataManager:
 
         self.dataThread : threading.Thread 
         self.isDataThreadRunning = False
+
+
+
+
+
+
 
 
     def pushToIncomingQueue(self, packet: PacketEnvelope):
