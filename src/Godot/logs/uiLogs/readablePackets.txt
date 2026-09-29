@@ -124,3 +124,114 @@ timestamp: 1790662942251514218
 message {
   message: "So then error handling on startup works then"
 }
+
+
+ClientUI Started: Tue Sep 29 17:08:06 2026
+
+client_id: 2
+client_name: "Nethika"
+timestamp: 1790672891396219399
+message {
+  message: "Hello"
+}
+client_id: 2
+client_name: "Nethika"
+timestamp: 1790672906122318931
+message {
+  message: "Is this going to save now that it is running on free threaded??"
+}
+
+
+ClientUI Started: Tue Sep 29 22:34:34 2026
+
+client_id: 2
+client_name: "Nethika"
+timestamp: 1790692479911422636
+message {
+  message: "Hello"
+}
+client_id: 2
+client_name: "Nethika"
+timestamp: 1790692479925063473
+message {
+}
+client_id: 2
+client_name: "Nethika"
+timestamp: 1790692486921360800
+message {
+  message: "Is this mutlithreaded now??"
+}
+
+
+ClientUI Started: Tue Sep 29 22:40:02 2026
+
+client_id: 3
+client_name: "Nethika"
+timestamp: 1790692806558244112
+message {
+  message: "Hello"
+}
+client_id: 3
+client_name: "Nethika"
+timestamp: 1790692811728345253
+message {
+  message: "Is this finally mutli threaded"
+}
+
+
+ClientUI Started: Tue Sep 29 22:41:33 2026
+
+client_id: 2
+client_name: "God"
+timestamp: 1790692896924347418
+message {
+  message: "Hello"
+}
+
+
+ClientUI Started: Tue Sep 29 22:43:59 2026
+
+client_id: 4
+client_name: "Hello"
+timestamp: 1790693044225067771
+message {
+  message: "Hello"
+}
+client_id: 4
+client_name: "Hello"
+timestamp: 1790693050903744287
+message {
+  message: "So This should work then?"
+}
+
+
+ClientUI Started: Tue Sep 29 23:08:35 2026
+
+client_id: 3
+client_name: "Nethika"
+timestamp: 1790694520439827941
+message {
+  message: "Hello"
+}
+client_id: 3
+client_name: "Nethika"
+timestamp: 1790694524192764788
+message {
+  message: "Is this finally working"
+}
+
+
+ClientUI Started: Tue Sep 29 23:12:23 2026
+
+client_id: 2
+client_name: "Nethika"
+timestamp: 1790694748913078257
+message {
+  message: "Hello"
+}
+client_id: 2
+client_name: "Nethika"
+timestamp: 1790694752741308103
+message {
+  message: "Is this finally working now?"
+}
