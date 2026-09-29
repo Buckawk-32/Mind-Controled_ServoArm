@@ -1,3 +1,4 @@
+import sys
 import threading
 import time
 
@@ -63,10 +64,10 @@ class UI:
         self.OUTPUT_MESSAGE_LOCATION[1] += 1
         self.pushMessagePacket(s)
 
-        with open("logs/uiLogs/readablePackets.txt", "a") as file:
+        with open("logs/uiLogs/readablePackets.txt", "a+") as file:
             file.write(text_format.MessageToString(self.curPacket))
 
-        with open("logs/uiLogs/bytePacket.bin", "ab") as file:
+        with open("logs/uiLogs/bytePacket.bin", "ab+") as file:
             file.write(self.curPacket.SerializeToString())
 
         self.iscurPacketChanged = False
@@ -83,9 +84,9 @@ class UI:
 
 
     def updateLoop(self):
-        with open("logs/uiLogs/readablePackets.txt", "a") as file:
+        with open("logs/uiLogs/readablePackets.txt", "a+") as file:
             file.write(f"\n\nClientUI Started: {time.ctime()}\n\n") 
-        with open("logs/uiLogs/bytePacket.bin", "ab") as file:
+        with open("logs/uiLogs/bytePacket.bin", "ab+") as file:
             file.write(f"\n\nClientUI Started: {time.ctime()}\n\n".encode()) 
 
         with self.term.fullscreen(), self.term.cbreak():
@@ -136,6 +137,15 @@ class UI:
 
         self.term.inkey()
 
+    def drawErrorScreen(self):
+        print(self.term.home + self.term.clear)
+
+        print(self.term.move_y(self.CENTER_TEXT - 1) + self.term.center("TCP APPLICATION ERROR."))  # ty: ignore[invalid-argument-type]
+        print(self.term.move_y(self.CENTER_TEXT) + self.term.center("PRESS ANY KEY TO LEAVE."))  # ty: ignore[invalid-argument-type]
+
+        self.term.inkey()
+
+
 
     def inputLoop(self):
         while True:
@@ -157,13 +167,21 @@ class UI:
     def writeClientInfo(self):
         with self.term.location(self.INPUT_TEXT_LOCATION[0], self.INPUT_TEXT_LOCATION[1]):
             self.echo("Client Name? > ")
-            name = self.handleStrInput()
+            try:
+                name = self.handleStrInput()
+                name = str(name)
+            except Exception as e:  # noqa: BLE001
+                with open("logs/uiLogs/errorLogs.txt", "a+") as file:
+                    file.write(f"Time: {time.ctime()}\nError: {e}\n\n") 
+
+                self.drawErrorScreen()
+                self.killAll()
 
             with self.term.location(self.CLIENT_INFO_TEXT_LOCATION[0], self.CLIENT_INFO_TEXT_LOCATION[1]):
                 self.echo("Name: " + name)
             
             self.CLIENT_INFO_TEXT_LOCATION[1] += 1
-            self.CLIENT_NAME = str(name)
+            self.CLIENT_NAME = name
 
 
         with self.term.location(self.INPUT_TEXT_LOCATION[0], self.INPUT_TEXT_LOCATION[1]):
@@ -172,10 +190,18 @@ class UI:
 
         with self.term.location(self.INPUT_TEXT_LOCATION[0], self.INPUT_TEXT_LOCATION[1]):
             self.echo("Client ID? > ")
-            id = self.handleIntInput()        
+            try:
+                id = self.handleIntInput()
+                id = int(id)
+            except Exception as e:  # noqa: BLE001
+                with open("logs/uiLogs/errorLogs.txt", "a+") as file:
+                    file.write(f"Time: {time.ctime()}\nError: {e}\n\n") 
+
+                self.drawErrorScreen()
+                self.killAll()
 
             with self.term.location(self.CLIENT_INFO_TEXT_LOCATION[0], self.CLIENT_INFO_TEXT_LOCATION[1]):
-                self.echo("ID: " + id)
+                self.echo(f"ID: {id}")
 
             self.CLIENT_INFO_TEXT_LOCATION[1] =+ 1
             self.CLIENT_ID = int(id)
@@ -243,6 +269,10 @@ class UI:
         if self.isUIRunning:
             self.UIThread.join()
             self.isUIRunning = False
+
+    def killAll(self):
+        sys.exit()
+
 
 
 

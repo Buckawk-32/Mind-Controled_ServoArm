@@ -14,3 +14,113 @@ timestamp: 1789634936301435392
 message {
   message: "Ok so if this work, then that means that the dataThread also works"
 }
+
+
+ClientUI Started: Tue Sep 29 13:46:57 2026
+
+
+
+ClientUI Started: Tue Sep 29 13:59:39 2026
+
+
+
+ClientUI Started: Tue Sep 29 14:01:14 2026
+
+
+
+ClientUI Started: Tue Sep 29 14:01:35 2026
+
+client_id: 3
+client_name: "3"
+timestamp: 1790661699710084890
+message {
+}
+client_id: 3
+client_name: "3"
+timestamp: 1790661700137125716
+message {
+}
+client_id: 3
+client_name: "3"
+timestamp: 1790661700323915109
+message {
+}
+client_id: 3
+client_name: "3"
+timestamp: 1790661700483857269
+message {
+}
+client_id: 3
+client_name: "3"
+timestamp: 1790661700634570447
+message {
+}
+client_id: 3
+client_name: "3"
+timestamp: 1790661700779912883
+message {
+}
+client_id: 3
+client_name: "3"
+timestamp: 1790661701531402659
+message {
+  message: "asdf"
+}
+client_id: 3
+client_name: "3"
+timestamp: 1790661702568924703
+message {
+  message: "q"
+}
+
+
+ClientUI Started: Tue Sep 29 14:02:39 2026
+
+
+
+ClientUI Started: Tue Sep 29 14:03:05 2026
+
+
+
+ClientUI Started: Tue Sep 29 14:08:33 2026
+
+
+
+ClientUI Started: Tue Sep 29 14:14:40 2026
+
+
+
+ClientUI Started: Tue Sep 29 14:15:14 2026
+
+
+
+ClientUI Started: Tue Sep 29 14:19:36 2026
+
+
+
+ClientUI Started: Tue Sep 29 14:20:10 2026
+
+
+
+ClientUI Started: Tue Sep 29 14:20:57 2026
+
+
+
+ClientUI Started: Tue Sep 29 14:21:38 2026
+
+
+
+ClientUI Started: Tue Sep 29 14:22:09 2026
+
+client_id: 3
+client_name: "Nethika"
+timestamp: 1790662933609992914
+message {
+  message: "hello"
+}
+client_id: 3
+client_name: "Nethika"
+timestamp: 1790662942251514218
+message {
+  message: "So then error handling on startup works then"
+}
